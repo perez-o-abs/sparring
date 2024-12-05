@@ -1,5 +1,6 @@
 # sparring
 
+Osmar Perez
 This project hosts the code for sparring app which is an app that allows to turn on and off performance issues.
 
 ## Build
