@@ -35,6 +35,18 @@
                     <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
                     <version>0.27.2</version>
+                    <configuration>
+                        <dockerHost>unix:///Users/os/.docker/run/docker.sock</dockerHost>
+                        <verbose>true</verbose>
+                        <images>
+                            <image>
+                                <name>${project.artifactId}:${project.version}</name>
+                                <build>
+                                    <dockerFileDir>${project.basedir}</dockerFileDir>
+                                </build>
+                            </image>
+                        </images>
+                    </configuration>
                     <executions>
                         <execution>
                             <id>build-image</id>
