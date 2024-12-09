@@ -66,11 +66,11 @@ pipeline {
                     
                     try {
                         // Run integration tests here
-                        sh 'curl -f http://localhost:8081/health || exit 1'  // Basic health check
-                        sh 'curl -f http://localhost:8082/health || exit 1'  // Basic health check
+                        sh 'curl -f http://admin-1/ || exit 1'  // Basic health check
+                        sh 'curl -f http://web-1/ || exit 1'  // Basic health check
                     } finally {
                         // Always cleanup
-                        sh 'docker-compose down -v'
+                        sh 'docker compose down -v'
                     }
                 }
             }
