@@ -66,8 +66,8 @@ pipeline {
                     
                     try {
                         // Run integration tests here
-                        sh 'curl -f http://admin-1/ || exit 1'  // Basic health check
-                        sh 'curl -f http://web-1/ || exit 1'  // Basic health check
+                        sh 'curl -f http://pipeline1-admin-1/ || exit 1'  // Basic health check
+                        sh 'curl -f http://pipeline1-web-1/ || exit 1'  // Basic health check
                     } finally {
                         // Always cleanup
                         sh 'docker compose down -v'
