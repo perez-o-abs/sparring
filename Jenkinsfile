@@ -62,7 +62,7 @@ pipeline {
                     sh 'docker compose up -d'
                     
                     // Wait for services to be ready
-                    sh 'sleep 30'  // Adjust time as needed
+                    sh 'sleep 120'  // Adjust time as needed
                     
                     try {
                         // Run integration tests here
