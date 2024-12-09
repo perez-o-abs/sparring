@@ -5,7 +5,7 @@ pipeline {
         // Define environment variables
         VERSION = '1.0-SNAPSHOT'
         MYSQL_ROOT_PASSWORD = credentials('mysql-root-password') // Jenkins credentials for MySQL
-        DOCKER_HOST=tcp://localhost:2375
+        DOCKER_HOST='tcp://localhost:2375'
     }
 
     tools {
