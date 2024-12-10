@@ -12,9 +12,9 @@ services:
   web:
     environment:
       GIT_COMMIT: ${GIT_COMMIT}  
-      SPRING_DATASOURCE_URL=jdbc:mysql://db:3308/sparringdb
-      SPRING_DATASOURCE_USERNAME=root
-      SPRING_DATASOURCE_PASSWORD=abstracta
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3308/sparringdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: abstracta
     image: sparring-web:${GIT_COMMIT}
     depends_on:
       - db
