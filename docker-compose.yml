@@ -1,7 +1,7 @@
 version: '3'
 services:
   db:
-    image: sparring-db:1.0-SNAPSHOT
+    image: sparring-db:${env.GIT_COMMIT[0..6]}
     environment:
       MYSQL_ROOT_PASSWORD: 'abstracta'
     volumes:
@@ -9,7 +9,7 @@ services:
     ports:
     - 3308:3306
   web:
-    image: sparring-web:1.0-SNAPSHOT
+    image: sparring-web:${env.GIT_COMMIT[0..6]}
     depends_on:
       - db
     ports:
@@ -20,7 +20,7 @@ services:
     - SPRING_DATASOURCE_USERNAME=root
     - SPRING_DATASOURCE_PASSWORD=abstracta
   admin:
-    image: sparring-admin:1.0-SNAPSHOT
+    image: sparring-admin:${env.GIT_COMMIT[0..6]}
     ports:
       - 8081:8080
 
