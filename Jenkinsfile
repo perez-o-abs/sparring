@@ -66,8 +66,8 @@ pipeline {
                     
                     try {
                         // Run integration tests here
-                        sh 'curl -f http://localhost:8081/ || exit 1'  // Basic health check
-                        sh 'curl -f http://localhost:8082/ || exit 1'  // Basic health check
+                        sh 'curl -f http://host.docker.internal:8081/ || exit 1'  // Basic health check
+                        sh 'curl -f http://host.docker.internal:8082/ || exit 1'  // Basic health check
                     } finally {
                         // Always cleanup
                         sh 'docker compose down -v'
