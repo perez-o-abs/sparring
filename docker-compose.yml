@@ -1,26 +1,30 @@
 version: '3'
 services:
   db:
-    image: sparring-db:${env.GIT_COMMIT[0..6]}
+    image: sparring-db:${GIT_COMMIT}
     environment:
       MYSQL_ROOT_PASSWORD: 'abstracta'
+      GIT_COMMIT: ${GIT_COMMIT}
     volumes:
       - db-data:/var/lib/mysql
     ports:
     - 3308:3306
   web:
-    image: sparring-web:${env.GIT_COMMIT[0..6]}
+    environment:
+      GIT_COMMIT: ${GIT_COMMIT}  
+      SPRING_DATASOURCE_URL=jdbc:mysql://db:3308/sparringdb
+      SPRING_DATASOURCE_USERNAME=root
+      SPRING_DATASOURCE_PASSWORD=abstracta
+    image: sparring-web:${GIT_COMMIT}
     depends_on:
       - db
     ports:
       - 8082:8080
       - 8849:8849
-    environment:
-    - SPRING_DATASOURCE_URL=jdbc:mysql://db:3308/sparringdb
-    - SPRING_DATASOURCE_USERNAME=root
-    - SPRING_DATASOURCE_PASSWORD=abstracta
   admin:
-    image: sparring-admin:${env.GIT_COMMIT[0..6]}
+    environment:
+      GIT_COMMIT: ${GIT_COMMIT}  
+    image: sparring-admin:${GIT_COMMIT}
     ports:
       - 8081:8080
 
