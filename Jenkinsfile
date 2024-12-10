@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Define environment variables
-        VERSION = '1.0-SNAPSHOT'
+        VERSION = "${env.GIT_COMMIT[0..6]}"
         MYSQL_ROOT_PASSWORD = credentials('mysql-root-password') // Jenkins credentials for MySQL
     }
 
