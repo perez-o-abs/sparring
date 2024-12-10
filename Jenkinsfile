@@ -38,23 +38,6 @@ pipeline {
             }
         }
 
-        stage('Build Docker Images') {
-            steps {
-                script {
-                    // Build Docker images for each service
-                    def services = ['sparring-admin', 'sparring-web', 'sparring-db']
-                    
-                    services.each { service ->
-                        dir(service) {
-                            def imageName = "${service}:${VERSION}"
-                            // Build Docker image
-                            docker.build(imageName, '-f Dockerfile .')
-                        }
-                    }
-                }
-            }
-        }
-
         stage('Integration Tests') {
             steps {
                 script {

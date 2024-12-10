@@ -27,6 +27,27 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>4.9.10</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>revision</goal>
+                            </goals>
+                            <phase>initialize</phase>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                        <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+                        <includeOnlyProperties>
+                            <includeOnlyProperty>git.commit.id.abbrev</includeOnlyProperty>
+                        </includeOnlyProperties>
+                        <commitIdLength>7</commitIdLength>
+                    </configuration>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>3.2.2</version>
@@ -40,7 +61,7 @@
                         <verbose>true</verbose>
                         <images>
                             <image>
-                                <name>${project.artifactId}:${project.version}</name>
+                                <name>${project.artifactId}:${git.commit.id.abbrev}</name>
                                 <build>
                                     <dockerFileDir>${project.basedir}</dockerFileDir>
                                 </build>
@@ -59,7 +80,12 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
-
 
 </project>
