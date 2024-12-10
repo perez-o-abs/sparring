@@ -59,7 +59,7 @@ pipeline {
             steps {
                 script {
                     // Start the services using docker-compose
-                    sh "docker compose up -d --build-arg GIT_COMMIT=${env.GIT_COMMIT[0..6]}"
+                    sh "GIT_COMMIT=${env.GIT_COMMIT[0..6]} docker compose up -d"
                     
                     // Wait for services to be ready
                     sh 'sleep 30'  // Adjust time as needed
