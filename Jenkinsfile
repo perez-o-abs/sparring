@@ -45,14 +45,14 @@ pipeline {
                     sh "GIT_COMMIT=${env.GIT_COMMIT[0..6]} docker compose up -d"
                     
                     // Wait for services to be ready
-                    sh 'sleep 30'  // Adjust time as needed
+                    sh 'sleep 30'
                     
                     try {
-                        // Run integration tests here
+                        // TODO Run integration tests here
                         sh 'curl -f http://host.docker.internal:8081/ || exit 1'  // Basic health check
                         sh 'curl -f http://host.docker.internal:8082/ || exit 1'  // Basic health check
                     } finally {
-                        // Always cleanup
+                        // cleanup
                         sh 'docker compose down -v'
                     }
                 }
@@ -71,7 +71,6 @@ pipeline {
         }
         failure {
             echo 'Pipeline failed!'
-            // You can add notifications here (email, Slack, etc.)
         }
     }
 }
