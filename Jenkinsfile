@@ -64,7 +64,7 @@ pipeline {
     post {
         always {
             // Clean workspace and remove unused docker images
-            cleanWs()
+            //cleanWs()
             sh 'docker system prune -f'
         }
         success {
