@@ -16,14 +16,23 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                // Disable host key verification for Git operations
+                sh 'mkdir -p ~/.ssh && echo "StrictHostKeyChecking no" >> ~/.ssh/config'
+                
                 // Checkout main repository
                 checkout scm
                 
                 // Checkout test automation repository using SSH
                 dir('automation-tests') {
-                    git url: 'git@gitlab.abstracta.us:Automation/trainings/sparring-automation-testcases.git',
-                        branch: 'main',
-                        credentialsId: 'gitlab-ssh-key'  // Jenkins credentials ID for GitLab SSH key
+                    checkout([$class: 'GitSCM',
+                        branches: [[name: 'main']],
+                        userRemoteConfigs: [[
+                            url: 'git@gitlab.abstracta.us:Automation/trainings/sparring-automation-testcases.git',
+                            credentialsId: 'gitlab-ssh-key'
+                        ]],
+                        extensions: [[$class: 'CloneOption', noTags: false, shallow: false, depth: 0]],
+                        gitTool: 'Default'
+                    ])
                 }
             }
         }
@@ -60,8 +69,11 @@ pipeline {
                         // TODO Run integration tests here
                         sh 'curl -f http://host.docker.internal:8081/ || exit 1'  // Basic health check
                         sh 'curl -f http://host.docker.internal:8082/ || exit 1'  // Basic health check
-                        sh 'cd automation-tests'
-                        sh 'mvn clean test'                        
+                        
+                        // Run automation tests
+                        dir('automation-tests') {
+                            sh 'mvn clean test'
+                        }
                     } finally {
                         // cleanup
                         sh 'docker compose down -v'
