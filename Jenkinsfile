@@ -40,6 +40,7 @@ pipeline {
         stage('Build') {
             steps {
 				sh 'docker --version'
+                sh 'rm -rf /var/jenkins_home/.m2/repository/org/testng/testng/7.9.0'
                 sh 'mvn --version'
                 sh 'mvn clean package -DskipTests'
             }
