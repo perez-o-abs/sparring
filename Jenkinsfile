@@ -58,8 +58,12 @@ pipeline {
         }
 
         stage('Integration Tests') {
+            tools {
+                jdk 'JDK 17'  // Use JDK 11 specifically for integration tests
+            }
             steps {
                 script {
+                    sh 'mvn --version'
                     // Start the services using docker-compose
                     sh "GIT_COMMIT=${env.GIT_COMMIT[0..6]} docker compose up -d"
                     
@@ -71,7 +75,7 @@ pipeline {
                         sh 'curl -f http://host.docker.internal:8081/ || exit 1'  // Basic health check
                         sh 'curl -f http://host.docker.internal:8082/ || exit 1'  // Basic health check
                         
-                        // Run automation tests
+                        // Run automation tests with JDK 11
                         dir('automation-tests') {
                             sh 'mvn clean test'
                         }
