@@ -27,7 +27,7 @@ pipeline {
                     checkout([$class: 'GitSCM',
                         branches: [[name: 'main']],
                         userRemoteConfigs: [[
-                            url: 'git@gitlab.abstracta.us:Automation/trainings/sparring-automation-testcases.git',
+                            url: 'git@gitlab.abstracta.us:osmar.perez/sparring-automation-testcases.git',
                             credentialsId: 'gitlab-ssh-key'
                         ]],
                         extensions: [[$class: 'CloneOption', noTags: false, shallow: false, depth: 0]],
