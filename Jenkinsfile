@@ -16,7 +16,14 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                // Checkout main repository
                 checkout scm
+                
+                // Checkout test automation repository
+                dir('automation-tests') {
+                    git url: 'https://gitlab.abstracta.us/Automation/trainings/sparring-automation-testcases',
+                        branch: 'main'
+                }
             }
         }
 
@@ -46,12 +53,14 @@ pipeline {
                     sh "GIT_COMMIT=${env.GIT_COMMIT[0..6]} docker compose up -d"
                     
                     // Wait for services to be ready
-                    sh 'sleep 180'
+                    sh 'sleep 30'
                     
                     try {
                         // TODO Run integration tests here
                         sh 'curl -f http://host.docker.internal:8081/ || exit 1'  // Basic health check
                         sh 'curl -f http://host.docker.internal:8082/ || exit 1'  // Basic health check
+                        sh 'cd automation-tests'
+                        sh 'mvn clean test'
                     } finally {
                         // cleanup
                         sh 'docker compose down -v'
