@@ -46,7 +46,7 @@ pipeline {
                     sh "GIT_COMMIT=${env.GIT_COMMIT[0..6]} docker compose up -d"
                     
                     // Wait for services to be ready
-                    sh 'sleep 30'
+                    sh 'sleep 180'
                     
                     try {
                         // TODO Run integration tests here
